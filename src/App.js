@@ -33,6 +33,7 @@ const App = () => {
     <Container>
       <Row>
         <Col>
+          <h1>Spotify Playlist Splitter</h1>
           <PlaylistSearch setSearch={setSearch} />
         </Col>
       </Row>
@@ -40,9 +41,17 @@ const App = () => {
         <Col>
           {error ? <Alert variant='danger'>Something went wrong... {error.message}</Alert> : null}
           {loading ? <Alert variant='info'> Loading </Alert> : null}
-          {playlist ? <Playlist tracks={playlist.tracks} genres={playlist.genres} /> : null}
         </Col>
       </Row>
+      {playlist ? (
+        <Playlist
+          name='Pitchfork 2010s'
+          author='a person'
+          years={['2019', '2018']}
+          tracks={playlist.tracks}
+          genres={playlist.genres}
+
+        />) : null}
     </Container>
   )
 }

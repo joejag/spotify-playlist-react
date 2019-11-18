@@ -40,6 +40,8 @@ it('loads playlist and renders tracks', async () => {
 
   const tracksAndGenresText = getAllByRole('listitem').map(el => el.textContent)
   expect(tracksAndGenresText).toEqual(['Alright by Kendrick Lamar'])
+
+  expect(getByText(/escape room/i)).toBeInTheDocument()
 })
 
 it('an error is rendered if there is a problem loading the playlist', async () => {
