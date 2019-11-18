@@ -46,16 +46,17 @@ const Playlist = ({ name, author, years, tracks, genres }) => {
     <>
       <Row>
         <Col>
-          <h2>{name} by {author}</h2>
+          <h2>{name} <em>by</em> {author}</h2>
         </Col>
       </Row>
       <Row>
         <Col sm='4'>
+          <h3>Years ({years.length})</h3>
+          <Form>
+            {years.map((year) => (<YearCheckBox key={year} year={year} />))}
+          </Form>
 
-          <h3>Years</h3>
-          {years.map((year) => (<YearCheckBox key={year} year={year} />))}
-
-          <h3>Genres</h3>
+          <h3>Genres ({genres.length})</h3>
           <Form>
             {genres.map((g) => (<GenreCheckBox key={g.genre} g={g} />))}
           </Form>
