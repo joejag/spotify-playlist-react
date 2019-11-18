@@ -39,15 +39,17 @@ it('loads playlist and renders tracks', async () => {
   await waitForElement(() => getByText(/Tracks/i))
 
   const tracksAndGenresText = getAllByRole('listitem').map(el => el.textContent)
-  expect(tracksAndGenresText).toEqual(['Alright by Kendrick Lamar', 'escape room : 25'])
+  expect(tracksAndGenresText).toEqual(['Alright by Kendrick Lamar'])
 })
 
 it('an error is rendered if there is a problem loading the playlist', async () => {
   fetchPlaylist.mockRejectedValueOnce({ message: 'oh no' })
-  const { getByRole } = render(<App />)
+  const { getByText, getByRole } = render(<App />)
+
+  expect(getByText(/loading/i)).toBeInTheDocument()
+
+  await waitForElement(() => getByText(/wrong/i))
 
   const alert = getByRole('alert')
-  expect(alert).toHaveTextContent(/loading/i)
-
   await wait(() => expect(alert).toHaveTextContent('oh no'))
 })

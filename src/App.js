@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 
+import Alert from 'react-bootstrap/Alert'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
 import fetchPlaylist from './api/api'
 import Playlist from './components/Playlist'
 import PlaylistSearch from './components/PlaylistSearch'
-import './App.css'
 
 export const DEFAULT_PLAYLIST = '16FzcfDid0m2i2EttomvSR'
 
@@ -27,15 +31,20 @@ const App = () => {
   }, [search])
 
   return (
-    <article>
-      <PlaylistSearch setSearch={setSearch} />
-
-      <div role='alert' aria-live='polite'>
-        {loading ? 'Loading...' : error ? 'Something went wrong...' + error.message : null}
-      </div>
-
-      {playlist ? <Playlist tracks={playlist.tracks} genres={playlist.genres} /> : null}
-    </article>
+    <Container>
+      <Row>
+        <Col>
+          <PlaylistSearch setSearch={setSearch} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {error ? <Alert variant='danger'>Something went wrong... {error.message}</Alert> : null}
+          {loading ? <Alert variant='info'> Loading </Alert> : null}
+          {playlist ? <Playlist tracks={playlist.tracks} genres={playlist.genres} /> : null}
+        </Col>
+      </Row>
+    </Container>
   )
 }
 
