@@ -1,63 +1,47 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+
+import fetchPlaylist from './api/api'
+import Playlist from './components/Playlist'
+import PlaylistSearch from './components/PlaylistSearch'
 import './App.css'
 
-function App () {
-  const [playlist, setPlaylist] = useState({ result: { tracks: [], genres: [] } })
-  const [query, setQuery] = useState('Pitchfork')
+const App = () => {
+  const [playlist, setPlaylist] = useState(null)
   const [search, setSearch] = useState('Pitchfork')
   const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
+  const [isError, setIsError] = useState(null)
 
   useEffect(() => {
-    const fetchStuff = async () => {
+    const fetchUsersPlaylist = () => {
       setIsLoading(true)
-      setIsError(false)
+      setIsError(null)
+      setPlaylist(null)
 
-      try {
-        const result = await axios(`http://localhost:8080/response.json?query=${search}`, { mode: 'no-cors' })
-        setPlaylist({ result: result.data })
-      } catch (error) {
-        setIsError(true)
-      }
-
-      setIsLoading(false)
+      fetchPlaylist(search)
+        .then(
+          result2 => {
+            setPlaylist({ result: result2.data })
+            setIsLoading(false)
+          },
+          error => {
+            setIsError(error)
+            setIsLoading(false)
+          }
+        )
     }
 
-    fetchStuff()
+    fetchUsersPlaylist()
   }, [search])
 
   return (
     <article>
-      <form onSubmit={(event) => { setSearch(query); event.preventDefault() }}>
-        <input
-          type='text'
-          value={query}
-          onChange={event => setQuery(event.target.value)}
-        />
-        <button type='submit'> Search </button>
-      </form>
+      <PlaylistSearch setSearch={setSearch} />
 
-      {isError && <div>Something went wrong ...</div>}
+      <div role='alert' aria-live='polite'>
+        {isLoading ? 'Loading...' : isError ? 'Something went wrong...' + isError.message : null}
+      </div>
 
-      {isLoading ? (
-        <div>Loading ...</div>
-      ) : (
-        <>
-          <h3>Tracks</h3>
-          <ul>
-            {playlist.result.tracks.map(track => (
-              <li key={track.trackId}>{track.title} by {track.artists[0]}</li>
-            ))}
-          </ul>
-          <h3>Genres</h3>
-          <ul>
-            {playlist.result.genres.map(g => (
-              <li key={g.genre}>{g.genre} : {g.count}</li>
-            ))}
-          </ul>
-        </>
-      )}
+      {playlist ? <Playlist tracks={playlist.result.tracks} genres={playlist.result.genres} /> : null}
     </article>
   )
 }
