@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { DEFAULT_PLAYLIST } from '../App'
-
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+
+import { DEFAULT_PLAYLIST } from '../App'
 
 const PlaylistSearch = ({ setSearch }) => {
   const [query, setQuery] = useState(DEFAULT_PLAYLIST)
