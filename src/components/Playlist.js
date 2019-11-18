@@ -7,14 +7,14 @@ import Form from 'react-bootstrap/Form'
 
 const GenreCheckBox = ({ g, selected, setSelected }) => {
   return (
-    <Form.Check inline type='checkbox' id={`genre-list-${g.genre}`}>
+    <Form.Check inline type='checkbox' id={`genre-list-${g.value}`}>
       <Form.Check.Input
         type='checkbox'
-        data-testid={`genre-toggle-${g.genre}`}
+        data-testid={`genre-toggle-${g.value}`}
         checked={selected}
         onChange={() => { setSelected(!selected) }}
       />
-      <Form.Check.Label>{g.genre} <Badge variant='secondary'>{g.count}</Badge></Form.Check.Label>
+      <Form.Check.Label>{g.value} <Badge variant='secondary'>{g.count}</Badge></Form.Check.Label>
     </Form.Check>
   )
 }
@@ -28,7 +28,7 @@ const YearCheckBox = ({ year }) => {
         checked={selected}
         onChange={() => { setSelected(!selected) }}
       />
-      <Form.Check.Label>{year} <Badge variant='secondary'>80</Badge></Form.Check.Label>
+      <Form.Check.Label>{year.value} <Badge variant='secondary'>{year.count}</Badge></Form.Check.Label>
     </Form.Check>
   )
 }
@@ -61,14 +61,14 @@ const Playlist = ({ name, author, years, tracks, genres }) => {
         <Col sm='4'>
           <h3>Years</h3>
           <Form>
-            {years.map((year) => (<YearCheckBox key={year} year={year} />))}
+            {years.map((year) => (<YearCheckBox key={year.value} year={year} />))}
           </Form>
 
           <h3>Genres</h3>
           <Form>
             {genreWithSelection.map((g, index) => (
               <GenreCheckBox
-                key={g.genre}
+                key={g.value}
                 selected={g.selected}
                 g={g}
                 setSelected={(value) => {

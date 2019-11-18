@@ -8,7 +8,7 @@ import fetchPlaylist from './api/api'
 import Playlist from './components/Playlist'
 import PlaylistSearch from './components/PlaylistSearch'
 
-export const DEFAULT_PLAYLIST = '16FzcfDid0m2i2EttomvSR'
+export const DEFAULT_PLAYLIST = '16FzcfDid0m2i2EttomvSR' // Pitchforks 2010s
 
 const App = () => {
   const [search, setSearch] = useState(DEFAULT_PLAYLIST)
@@ -47,7 +47,7 @@ const App = () => {
         <Playlist
           name='Pitchfork 2010s'
           author='a person'
-          years={['2019', '2018']}
+          years={playlist.years}
           tracks={playlist.tracks}
           genres={playlist.genres}
 
