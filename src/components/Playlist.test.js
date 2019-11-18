@@ -32,13 +32,13 @@ it('filters tracks with a specified genre', () => {
     />)
 
   const tracksText = getAllByRole('listitem').map(el => el.textContent)
-  expect(tracksText).toEqual(['TITLE_1 by ARTIST_1', 'TITLE_2 by ARTIST_2'])
+  expect(tracksText).toEqual(['TITLE_1 • ARTIST_1', 'TITLE_2 • ARTIST_2'])
 
-  const hiphopCheckbox = getByTestId('genre-toggle-GENRE_1')
-  expect(hiphopCheckbox.checked).toEqual(true)
-  fireEvent.click(hiphopCheckbox)
-  expect(hiphopCheckbox.checked).toEqual(false)
+  const genreOneCheckbox = getByTestId('genre-toggle-GENRE_1')
+  expect(genreOneCheckbox.checked).toEqual(true)
+  fireEvent.click(genreOneCheckbox)
+  expect(genreOneCheckbox.checked).toEqual(false)
 
   const updatesTracksText = getAllByRole('listitem').map(el => el.textContent)
-  expect(updatesTracksText).toEqual(['TITLE_2 by ARTIST_2'])
+  expect(updatesTracksText).toEqual(['TITLE_2 • ARTIST_2'])
 })

@@ -36,7 +36,7 @@ const YearCheckBox = ({ year }) => {
 const Track = ({ track }) => {
   return (
     <ListGroup.Item role='listitem'>
-      {track.title} by {track.artists[0]}
+      <strong>{track.title}</strong> • {track.artists[0]}
     </ListGroup.Item>
   )
 }
@@ -59,12 +59,12 @@ const Playlist = ({ name, author, years, tracks, genres }) => {
       </Row>
       <Row>
         <Col sm='4'>
-          <h3>Years ({years.length})</h3>
+          <h3>Years</h3>
           <Form>
             {years.map((year) => (<YearCheckBox key={year} year={year} />))}
           </Form>
 
-          <h3>Genres ({genreWithSelection.length})</h3>
+          <h3>Genres</h3>
           <Form>
             {genreWithSelection.map((g, index) => (
               <GenreCheckBox

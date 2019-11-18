@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-// http://REAL_HOST/playlistInfo/16FzcfDid0m2i2EttomvSR
-const WEB_SERVICE = 'http://localhost:8080/response.json'
+// const WEB_SERVICE = 'http://localhost:4000/playlistInfo'
+const WEB_SERVICE = 'https://ndb4t6or5d.execute-api.eu-west-2.amazonaws.com/prod/playlistInfo'
 
 const fetchPlaylist = async (id) => {
-  return axios(`${WEB_SERVICE}?query=${id}`, { mode: 'no-cors' })
+  return axios(`${WEB_SERVICE}/${id}`, { mode: 'no-cors' })
 }
 
 export default fetchPlaylist

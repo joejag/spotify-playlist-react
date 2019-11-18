@@ -39,7 +39,7 @@ it('loads playlist and renders tracks', async () => {
   await waitForElement(() => getByText(/Tracks/i))
 
   const tracksAndGenresText = getAllByRole('listitem').map(el => el.textContent)
-  expect(tracksAndGenresText).toEqual(['Alright by Kendrick Lamar'])
+  expect(tracksAndGenresText).toEqual(['Alright • Kendrick Lamar'])
 
   expect(getByText(/escape room/i)).toBeInTheDocument()
 })
