@@ -5,28 +5,21 @@ import Playlist from './components/Playlist'
 import PlaylistSearch from './components/PlaylistSearch'
 import './App.css'
 
+export const DEFAULT_PLAYLIST = '16FzcfDid0m2i2EttomvSR'
+
 const App = () => {
-  const [playlist, setPlaylist] = useState(null)
-  const [search, setSearch] = useState('Pitchfork')
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(null)
+  const [search, setSearch] = useState(DEFAULT_PLAYLIST)
+  const [appState, setAppState] = useState({ playlist: null, loading: false, error: null })
+  const { playlist, loading, error } = appState
 
   useEffect(() => {
     const fetchUsersPlaylist = () => {
-      setIsLoading(true)
-      setIsError(null)
-      setPlaylist(null)
+      setAppState({ playlist: null, loading: true, error: null })
 
       fetchPlaylist(search)
         .then(
-          result2 => {
-            setPlaylist({ result: result2.data })
-            setIsLoading(false)
-          },
-          error => {
-            setIsError(error)
-            setIsLoading(false)
-          }
+          result => setAppState({ playlist: result.data, loading: false, error: null }),
+          error => setAppState({ playlist: null, loading: false, error })
         )
     }
 
@@ -38,10 +31,10 @@ const App = () => {
       <PlaylistSearch setSearch={setSearch} />
 
       <div role='alert' aria-live='polite'>
-        {isLoading ? 'Loading...' : isError ? 'Something went wrong...' + isError.message : null}
+        {loading ? 'Loading...' : error ? 'Something went wrong...' + error.message : null}
       </div>
 
-      {playlist ? <Playlist tracks={playlist.result.tracks} genres={playlist.result.genres} /> : null}
+      {playlist ? <Playlist tracks={playlist.tracks} genres={playlist.genres} /> : null}
     </article>
   )
 }
